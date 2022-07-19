@@ -30,14 +30,14 @@ author = "Patrik Karlsson"
 
 local bjnp = require("bjnp")
 local shortport = require("shortport")
-local stdnse = require("stdnse")
+local std_nse = require("std_nse")
 
 portrule = shortport.portnumber({8611, 8612}, "udp")
 
 action = function(host, port)
   local helper = bjnp.Helper:new(host, port)
   if ( not(helper:connect()) ) then
-    return stdnse.format_output(false, "Failed to connect to server")
+    return std_nse.format_output(false, "Failed to connect to server")
   end
   local status, attrs
   if ( port.number == 8611 ) then
@@ -46,5 +46,5 @@ action = function(host, port)
     status, attrs = helper:getScannerIdentity()
   end
   helper:close()
-  return stdnse.format_output(true, attrs)
+  return std_nse.format_output(true, attrs)
 end
